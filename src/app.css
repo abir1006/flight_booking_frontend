@@ -1,0 +1,98 @@
+body {
+    font-size: 16px;
+}
+
+.bg-wrapper {
+    background: url("../public/images/mainBackground.jpg") no-repeat top center;
+    height: 100vh;
+}
+
+.header {
+    height: 150px;
+}
+
+.box {
+    padding: 15px;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 0 3px 3px rgba(149, 157, 165, 0.08);
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* vh stands for viewport height */
+}
+
+.login-form {
+    width: 400px;
+    max-width: 100%; /* adjust this value to control the form's width */
+}
+
+a {
+    text-decoration: none;
+    color: darkred;
+}
+
+input[type=text],
+input[type=text]:hover
+input[type=text]:focus,
+input[type=text].focus {
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+}
+
+.btn {
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: 1px solid darkslateblue;
+    background: white;
+    color: grey;
+}
+
+.tab .btn.selected {
+    background: #6659b4;
+    color: white;
+}
+
+.btn:hover,
+.btn.selected:hover {
+    background: darkslateblue;
+    color: white;
+}
+
+.search-btn {
+    border-radius: 5px;
+    padding: 9px;
+    background: darkred;
+    color: white;
+}
+
+.search-btn:hover {
+    background: darkred;
+    opacity: 0.9;
+}
+
+.search-btn.full-width {
+    width: 100%;
+}
+
+
+.welcomeText {
+    color: darkslateblue;
+    font-size: 25px;
+}
+
+.rs-picker-toggle-wrapper {
+    display: block;
+    width: 100%;
+}
+
+.error_text {
+    color: red;
+    font-size: 14px;
+}
