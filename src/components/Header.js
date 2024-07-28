@@ -1,8 +1,21 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlane} from "@fortawesome/free-solid-svg-icons/faPlane";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {logout} from "../features/authSlice";
+import {Dropdown} from "rsuite";
 
 const Header = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const authUser = useSelector(state => state.auth);
+    console.log(authUser.isAuthenticated)
+
+    const logoutHandler = () => {
+        dispatch(logout());
+        navigate("/login");
+    }
+
     return <div className={`header`}>
         <div className={`row`}>
             <div className={`col-8 py-5`}>
@@ -11,7 +24,13 @@ const Header = () => {
                 </Link>
             </div>
             <div className={`col-4 py-5 text-end`}>
-                <Link to={'/login'}>Login</Link> / <Link to={'/register'}>Register</Link>
+                {!authUser.isAuthenticated && <><Link to={'/login'}>Login</Link> / <Link
+                    to={'/register'}>Register</Link></>}
+                {authUser.isAuthenticated &&
+                    <Dropdown title={`Welcome ${authUser?.user?.firstname}`}>
+                        <Dropdown.Item>My bookings</Dropdown.Item>
+                        <Dropdown.Item onClick={logoutHandler}>Logout</Dropdown.Item>
+                    </Dropdown>}
             </div>
         </div>
     </div>

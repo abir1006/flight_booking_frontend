@@ -25,7 +25,7 @@ body {
     min-height: 100vh; /* vh stands for viewport height */
 }
 
-.login-form {
+.login-form, .register-form {
     width: 400px;
     max-width: 100%; /* adjust this value to control the form's width */
 }
@@ -62,6 +62,7 @@ input[type=text].focus {
 .btn:hover,
 .btn.selected:hover {
     background: darkslateblue;
+    border: 1px solid darkslateblue;
     color: white;
 }
 

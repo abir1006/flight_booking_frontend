@@ -53,12 +53,12 @@ const Login = () => {
         axios.post("/auth/authenticate", form)
             .then(res => {
 
-                const decodedToken = jwtDecode(res.data.token);
-
-                console.log(decodedToken);
+                const authUserRole = jwtDecode(res.data.token)?.roles[0];
+                let authUser = res.data.user;
+                authUser.role = authUserRole;
 
                 dispatch(loginSuccess({
-                    user: res.data.user,
+                    user: authUser,
                     token: res.data.token
                 }));
 
@@ -66,7 +66,7 @@ const Login = () => {
 
                 toast.success("Successfully logged in!")
 
-                if (res.data.roles[0].role === 'USER') {
+                if (authUserRole === 'USER') {
                     navigate("/");
                 } else {
                     navigate("/admin/dashboard");
@@ -110,7 +110,8 @@ const Login = () => {
                         disabled={btnDisable}
                         onClick={() => loginHandler()}
                         type="button"
-                        className="btn btn-outline-primary mb-3 float-end"> {btnDisable && <FontAwesomeIcon spin={true} icon={faSpinner} />} Login
+                        className="btn btn-outline-primary mb-3 float-end"> {btnDisable &&
+                        <FontAwesomeIcon spin={true} icon={faSpinner}/>} Login
                     </button>
                 </div>
             </div>

@@ -135,9 +135,9 @@ const Register = () => {
         <div className="form-container">
 
             <div className="register-form box">
-                <p className={`text-center p-4`}>User Registration</p>
+                <h5 className={`text-center py-3`} style={{color: 'green'}}>Passenger Registration</h5>
                 <div className={`row`}>
-                    <div className={`col-6`}>
+                <div className={`col-12`}>
                         <div className="mb-3">
                             <label htmlFor="user_first_name" className="form-label">First Name</label>
                             <input
@@ -170,6 +170,17 @@ const Register = () => {
                                 className={`form-control ${errors?.field === "email" && " input_error"}`}
                                 id="user_email"/>
                         </div>
+
+                        <div className="mb-3">
+                            <label className="form-label">Address</label>
+                            <input
+                                onChange={onChangeHandler}
+                                value={form.street}
+                                type="text"
+                                name={`address`}
+                                className={`form-control ${errors?.field === "street" && " input_error"}`}
+                            />
+                        </div>
                         <div className="mb-3">
                             <label htmlFor="user_password" className={`form-label`}>Password</label>
                             <input
@@ -190,81 +201,6 @@ const Register = () => {
                                 className={`form-control ${errors?.field === "confirm_password" && " input_error"}`}
                                 id="confirmPassword"/>
                         </div>
-                    </div>
-
-                    <div className={`col-6`}>
-
-                        <div className="mb-2">
-                            <label htmlFor="user_phone" className="form-label">Phone</label>
-                            <input
-                                onChange={onChangeHandler}
-                                value={form.phone}
-                                type="text"
-                                name={`phone`}
-                                className={`form-control ${errors?.field === "phone" && " input_error"}`}
-                                id="user_phone"/>
-                        </div>
-
-                        <div className="mb-3">
-                            <label className="form-label">Address</label>
-                            <input
-                                onChange={onChangeHandler}
-                                value={form.street}
-                                type="text"
-                                placeholder={`Street`}
-                                name={`street`}
-                                className={`form-control ${errors?.field === "street" && " input_error"}`}
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <input
-                                onChange={onChangeHandler}
-                                value={form.city}
-                                placeholder={`City`}
-                                type="text"
-                                name={`city`}
-                                className={`form-control ${errors?.field === "city" && " input_error"}`}
-                                id="user_phone"/>
-                        </div>
-                        <div className="mb-3">
-                            <input
-                                onChange={onChangeHandler}
-                                value={form.state}
-                                placeholder={`State`}
-                                type="text"
-                                name={`state`}
-                                className={`form-control ${errors?.field === "state" && " input_error"}`}/>
-                        </div>
-                        <div className="mb-3">
-                            <input
-                                onChange={onChangeHandler}
-                                value={form.postalCode}
-                                placeholder={`Postal code`}
-                                type="text"
-                                name={`postalCode`}
-                                className={`form-control ${errors?.field === "postalCode" && " input_error"}`}/>
-                        </div>
-
-                        <div className="mb-3">
-                            <input
-                                onChange={onChangeHandler}
-                                value={form.country}
-                                placeholder={`Country`}
-                                type="text"
-                                name={`country`}
-                                className={`form-control ${errors?.field === "country" && " input_error"}`}/>
-                        </div>
-
-                        <div className="mb-3">
-                            <select
-                                onChange={onChangeHandler}
-                                name={`role`} className={`form-select ${errors?.field === "role" && " input_error"}`}>
-                                <option value={``}>Select Type</option>
-                                <option value={`BUYER`}>Buyer</option>
-                                <option value={`SELLER`}>Seller</option>
-                            </select>
-                        </div>
-
                     </div>
                 </div>
                 <div>
