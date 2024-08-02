@@ -24,8 +24,6 @@ const Sidebar = () => {
 
     const [activeKey, setActiveKey] = useState('1');
 
-    console.log(curPath);
-
     const logoutHandler = () => {
         dispatch(logout());
         navigate("/login");
@@ -41,16 +39,22 @@ const Sidebar = () => {
                         eventKey="1" icon={<DashboardIcon/>}>
                         Dashboard
                     </Nav.Item>
-                    <Nav.Item eventKey="2" icon={<PeoplesIcon/>}>
-                        Passenger
-                    </Nav.Item>
+                    <Nav.Menu placement="rightStart" eventKey="2" title="Passenger"
+                              icon={<PeoplesIcon/>}>
+                        <Nav.Item
+                            eventKey="2-1"
+                            onClick={e => navigate("/admin/passenger/list")}>
+                            List
+                        </Nav.Item>
+                    </Nav.Menu>
                     <Nav.Item eventKey="3" icon={<EventDetailIcon/>}>
                         Booking
                     </Nav.Item>
                     <Nav.Item eventKey="4" icon={<FaPlaneUp className={`rs-icon`} width={`1em`}/>}>
                         Flight
                     </Nav.Item>
-                    <Nav.Menu placement="rightStart" eventKey="5" title="Airport" icon={<FaPlaneArrival className={`rs-icon`} width={`1em`}/>}>
+                    <Nav.Menu placement="rightStart" eventKey="5" title="Airport"
+                              icon={<FaPlaneArrival className={`rs-icon`} width={`1em`}/>}>
                         <Nav.Item
                             onClick={e => navigate("/admin/airport/list")}
                             eventKey="5-1">

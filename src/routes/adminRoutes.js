@@ -5,6 +5,7 @@ import PrivateRoute from "./privateRoute";
 import Users from "../pages/admin/Users";
 import AirportList from "../pages/admin/airport/AirportList";
 import AirportAdd from "../pages/admin/airport/AirportAdd";
+import PassengerList from "../pages/admin/passenger/PassengerList";
 
 
 const AdminRoutes = () => {
@@ -16,9 +17,9 @@ const AdminRoutes = () => {
                     <Dashboard/>
                 </PrivateRoute>
             }/>
-            <Route path="passengers" element={
+            <Route path="passenger/list" element={
                 <PrivateRoute roles={['ADMIN']}>
-                    <Users/>
+                    <PassengerList/>
                 </PrivateRoute>
             }/>
             <Route path="airport/list" element={
