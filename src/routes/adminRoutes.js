@@ -3,13 +3,13 @@ import {Route, Routes} from "react-router-dom";
 import Dashboard from "../pages/admin/Dashboard";
 import PrivateRoute from "./privateRoute";
 import Users from "../pages/admin/Users";
-import Airports from "../pages/admin/Airports";
+import AirportList from "../pages/admin/airport/AirportList";
+import AirportAdd from "../pages/admin/airport/AirportAdd";
 
 
 const AdminRoutes = () => {
 
     return <Routes>
-        {/*<Route element={<PrivateRoutes/>}>*/}
         <Route path="/admin" element={<AdminLayout/>}>
             <Route path="dashboard" index element={
                 <PrivateRoute roles={['ADMIN']}>
@@ -21,13 +21,17 @@ const AdminRoutes = () => {
                     <Users/>
                 </PrivateRoute>
             }/>
-            <Route path="airports" element={
+            <Route path="airport/list" element={
                 <PrivateRoute roles={['ADMIN']}>
-                    <Airports/>
+                    <AirportList/>
+                </PrivateRoute>
+            }/>
+            <Route path="airport/add" element={
+                <PrivateRoute roles={['ADMIN']}>
+                    <AirportAdd/>
                 </PrivateRoute>
             }/>
         </Route>
-        {/*</Route>*/}
     </Routes>
 
 }

@@ -12,6 +12,8 @@ body {
 }
 
 .box {
+    width: 100%;
+    float: left;
     padding: 15px;
     border-radius: 8px;
     background-color: white;
@@ -46,7 +48,7 @@ input[type=text].focus {
     outline: none;
 }
 
-.btn {
+.btn, button, .rs-btn {
     border-radius: 5px;
     padding: 5px 10px;
     border: 1px solid darkslateblue;
@@ -60,6 +62,7 @@ input[type=text].focus {
 }
 
 .btn:hover,
+.rs-btn:hover,
 .btn.selected:hover {
     background: darkslateblue;
     border: 1px solid darkslateblue;

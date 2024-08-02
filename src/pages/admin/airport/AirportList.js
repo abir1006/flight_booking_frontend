@@ -1,33 +1,56 @@
 import {useEffect, useState} from "react";
 import {Pagination, Table} from 'rsuite';
-import axios from "../../configs/axios";
+import axios from "../../../configs/axios";
 import {FaEdit, FaTrashAlt} from "react-icons/fa";
 import {FaTrash} from "react-icons/fa6";
+import {confirm} from "react-confirm-box";
+import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 
 const {Column, HeaderCell, Cell} = Table;
 
-const Airports = () => {
+const AirportList = () => {
 
     const [airports, setAirports] = useState([])
     const [limit, setLimit] = useState(15);
     const [page, setPage] = useState(1);
     const [totalRecords, setTotalRecords] = useState(0)
+    const navigate = useNavigate();
 
     useEffect(() => {
         getAirportData(page);
     }, []);
 
     const getAirportData = page => {
-        page = page-1;
+        page = page - 1;
         axios.get(`/airports/paged?page=${page}&size=${limit}`).then(res => {
             setAirports(res.data?.content);
             setTotalRecords(res.data?.totalElements);
+        }).catch( err => {
+            console.log(err)
+            // if (err.response.status === 500) {
+            //     navigate("/login")
+            // }
         })
     }
 
     const handleChangePage = pageNo => {
         setPage(pageNo)
         getAirportData(pageNo);
+    }
+
+    const deleteHandler = async id => {
+        const result = await confirm("Are you sure want to delete?");
+        if (result) {
+            axios.delete(`airports/${id}`)
+                .then(res => {
+                    getAirportData(1);
+                    toast.success("Successfully deleted!")
+                })
+                .catch(err => console.log(err));
+            return;
+        }
+
     }
 
 
@@ -64,8 +87,7 @@ const Airports = () => {
                 <Cell className={`table_action`} style={{padding: '6px'}}>
                     {rowData => (
                         <>
-                            <FaEdit className={`mx-2`} width={`0.5em`} onClick={() => alert(`id:${rowData.id}`)}/>
-                            <FaTrash className={`mx-2`} width={`0.5em`} onClick={() => alert(`id:${rowData.id}`)}/>
+                            <FaTrash className={`mx-2`} width={`0.5em`} onClick={() => deleteHandler(rowData.id)}/>
                         </>
                     )}
                 </Cell>
@@ -82,7 +104,7 @@ const Airports = () => {
                 boundaryLinks
                 maxButtons={5}
                 size="xs"
-                layout={['pager']}
+                layout={['total', 'pager']}
                 total={totalRecords}
                 limitOptions={[10, 30, 50]}
                 limit={limit}
@@ -94,4 +116,4 @@ const Airports = () => {
     </div>
 }
 
-export default Airports;
+export default AirportList;
