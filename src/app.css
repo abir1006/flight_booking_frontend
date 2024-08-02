@@ -114,3 +114,8 @@ input[type=text].focus {
     font-size: 15px;
 }
 
+.table_action svg {
+    cursor: pointer;
+    color: #3f3f3f;
+}
+

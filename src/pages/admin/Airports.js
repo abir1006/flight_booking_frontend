@@ -30,44 +30,38 @@ const Airports = () => {
         getAirportData(pageNo);
     }
 
-    // const data = airports?.filter((v, i) => {
-    //     const start = limit * (page - 1);
-    //     const end = start + limit;
-    //     return i >= start && i < end;
-    // });
-
 
     return <div className={`box`}>
         <Table disabledScroll autoHeight={true} data={airports}>
-            <Column width={60}>
+            <Column width={50}>
                 <HeaderCell>ID</HeaderCell>
                 <Cell dataKey="id"/>
             </Column>
 
-            <Column width={350}>
+            <Column flexGrow={2}>
                 <HeaderCell>Airport Name</HeaderCell>
                 <Cell dataKey="name"/>
             </Column>
 
-            <Column>
+            <Column flexGrow={1}>
                 <HeaderCell>Code</HeaderCell>
                 <Cell dataKey="code"/>
             </Column>
 
-            <Column width={150}>
+            <Column flexGrow={1}>
                 <HeaderCell>City</HeaderCell>
                 <Cell dataKey="city"/>
             </Column>
 
-            <Column width={250}>
+            <Column flexGrow={1}>
                 <HeaderCell>Country</HeaderCell>
                 <Cell dataKey="country"/>
             </Column>
 
-            <Column width={80} align="center" fixed="right">
+            <Column flexGrow={1} align="right" fixed="right">
                 <HeaderCell></HeaderCell>
 
-                <Cell style={{padding: '6px'}}>
+                <Cell className={`table_action`} style={{padding: '6px'}}>
                     {rowData => (
                         <>
                             <FaEdit className={`mx-2`} width={`0.5em`} onClick={() => alert(`id:${rowData.id}`)}/>
