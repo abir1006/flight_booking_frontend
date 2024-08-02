@@ -9,7 +9,6 @@ const Header = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const authUser = useSelector(state => state.auth);
-    console.log(authUser.isAuthenticated)
 
     const logoutHandler = () => {
         dispatch(logout());
@@ -27,7 +26,7 @@ const Header = () => {
                 {!authUser.isAuthenticated && <><Link to={'/login'}>Login</Link> / <Link
                     to={'/register'}>Register</Link></>}
                 {authUser.isAuthenticated &&
-                    <Dropdown title={`Welcome ${authUser?.user?.firstname}`}>
+                    <Dropdown title={`Welcome ${authUser?.user?.firstname || authUser?.user?.email}`}>
                         <Dropdown.Item>My bookings</Dropdown.Item>
                         <Dropdown.Item onClick={logoutHandler}>Logout</Dropdown.Item>
                     </Dropdown>}

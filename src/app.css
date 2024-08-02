@@ -51,7 +51,7 @@ input[type=text].focus {
     padding: 5px 10px;
     border: 1px solid darkslateblue;
     background: white;
-    color: grey;
+    color: darkslateblue;
 }
 
 .tab .btn.selected {
@@ -96,4 +96,21 @@ input[type=text].focus {
 .error_text {
     color: red;
     font-size: 14px;
+    padding-bottom: 15px;
 }
+
+.adminPageTitle {
+    color: darkslateblue;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.rs-table-cell-header {
+    font-weight: bold;
+    color: #2f2f2f;
+}
+
+.rs-table-cell {
+    font-size: 15px;
+}
+

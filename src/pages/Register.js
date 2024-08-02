@@ -39,36 +39,6 @@ const Register = () => {
             return false;
         }
 
-        if (form.phone === "") {
-            setErrors({...errors, field: "phone", message: "fields can not be empty"})
-            return false;
-        }
-
-        if (form.street === "") {
-            setErrors({...errors, field: "street", message: "fields can not be empty"})
-            return false;
-        }
-
-        if (form.city === "") {
-            setErrors({...errors, field: "city", message: "fields can not be empty"})
-            return false;
-        }
-
-        if (form.state === "") {
-            setErrors({...errors, field: "state", message: "fields can not be empty"})
-            return false;
-        }
-
-        if (form.postalCode === "") {
-            setErrors({...errors, field: "postalCode", message: "fields can not be empty"})
-            return false;
-        }
-
-        if (form.country === "") {
-            setErrors({...errors, field: "country", message: "fields can not be empty"})
-            return false;
-        }
-
         if (form.password === "") {
             setErrors({...errors, field: "password", message: "fields can not be empty"})
             return false;
@@ -81,11 +51,6 @@ const Register = () => {
 
         if (form.password !== form.confirmPassword) {
             setErrors({...errors, message: "Password didn't not match"})
-            return false;
-        }
-
-        if (form.role === "") {
-            setErrors({...errors, field: "role", message: "Select a user role"})
             return false;
         }
 
@@ -102,22 +67,11 @@ const Register = () => {
             firstName: form.firstName,
             lastName: form.lastName,
             email: form.email,
-            username: form.email,
-            phone: form.phone,
             password: form.password,
-            address: {
-                street: form.street,
-                city: form.city,
-                state: form.state,
-                postalCode: form.postalCode,
-                county: form.country
-            },
-            roles: [{
-                role: form.role
-            }]
+            role: 'USER'
         }
 
-        axios.post("/users", regData)
+        axios.post("/auth/register", regData)
             .then(res => {
                 console.log(res.data)
                 navigate("/login");
@@ -125,7 +79,7 @@ const Register = () => {
             })
             .catch(err => {
                 console.log(err);
-                setErrors({...errors, message: "Password must be at least 8 characters long"})
+                setErrors({...errors, message: err.response.data.error})
             })
 
 
@@ -137,7 +91,7 @@ const Register = () => {
             <div className="register-form box">
                 <h5 className={`text-center py-3`} style={{color: 'green'}}>Passenger Registration</h5>
                 <div className={`row`}>
-                <div className={`col-12`}>
+                    <div className={`col-12`}>
                         <div className="mb-3">
                             <label htmlFor="user_first_name" className="form-label">First Name</label>
                             <input
@@ -171,16 +125,6 @@ const Register = () => {
                                 id="user_email"/>
                         </div>
 
-                        <div className="mb-3">
-                            <label className="form-label">Address</label>
-                            <input
-                                onChange={onChangeHandler}
-                                value={form.street}
-                                type="text"
-                                name={`address`}
-                                className={`form-control ${errors?.field === "street" && " input_error"}`}
-                            />
-                        </div>
                         <div className="mb-3">
                             <label htmlFor="user_password" className={`form-label`}>Password</label>
                             <input

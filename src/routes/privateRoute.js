@@ -2,19 +2,15 @@ import { Outlet, Navigate } from 'react-router-dom'
 import {useSelector} from "react-redux";
 
 const PrivateRoute = ({ children, roles }) => {
-    // let {isAuthenticated} = useSelector(state => state.auth);
-    // return(
-    //     isAuthenticated ? <Outlet/> : <Navigate to="/login"/>
-    // )
 
-    const { isAuthenticated, user } = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth);
 
-    if (!isAuthenticated) {
+    if (!auth.isAuthenticated) {
         // If the user is not authenticated, redirect to the login page
         return <Navigate to="/login" />;
     }
 
-    if (roles && roles.length > 0 && !roles.includes(user.roles[0].role)) {
+    if (roles && roles.length > 0 && !roles.includes(auth?.user?.role)) {
         // If the user does not have the required role, redirect to an unauthorized page
         return <Navigate to="/unauthorized" />;
     }
