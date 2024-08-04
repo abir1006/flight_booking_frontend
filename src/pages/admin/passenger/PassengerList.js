@@ -11,7 +11,7 @@ const {Column, HeaderCell, Cell} = Table;
 const PassengerList = () => {
 
     const [passengers, setPassengers] = useState([]);
-    const [limit, setLimit] = useState(15);
+    const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const [totalRecords, setTotalRecords] = useState(0);
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ const PassengerList = () => {
 
     const getPassengerData = page => {
         page = page - 1;
-        axios.get(`admin/users/passengers?page=${page}&size=${limit}`)
+        axios.get(`admin/passengers/paged?page=${page}&size=${limit}`)
             .then(res => {
                 setPassengers(res.data?.content);
                 setTotalRecords(res.data?.totalElements);
@@ -42,7 +42,7 @@ const PassengerList = () => {
     const deleteHandler = async id => {
         const result = await confirm("Are you sure want to delete?");
         if (result) {
-            axios.delete(`admin/users/${id}`)
+            axios.delete(`admin/passengers/${id}`)
                 .then(res => {
                     getPassengerData(1);
                     toast.success("Successfully deleted!")
@@ -65,12 +65,12 @@ const PassengerList = () => {
 
                 <Column flexGrow={1}>
                     <HeaderCell>First Name</HeaderCell>
-                    <Cell dataKey="firstname"/>
+                    <Cell dataKey="firstName"/>
                 </Column>
 
                 <Column flexGrow={1}>
                     <HeaderCell>Last Name</HeaderCell>
-                    <Cell dataKey="lastname"/>
+                    <Cell dataKey="lastName"/>
                 </Column>
 
                 <Column flexGrow={2}>

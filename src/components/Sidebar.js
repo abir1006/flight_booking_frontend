@@ -1,6 +1,7 @@
-import {Link, useLocation, useNavigate} from "react-router-dom";
-import {Nav, Sidenav} from "rsuite";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Nav, Sidenav } from "rsuite";
 import {
+    FaPaperPlane,
     FaPlaneArrival,
     FaPlaneUp,
 } from "react-icons/fa6";
@@ -10,9 +11,9 @@ import PeoplesIcon from '@rsuite/icons/Peoples';
 import EventDetailIcon from '@rsuite/icons/EventDetail';
 import OffIcon from '@rsuite/icons/Off';
 import ListIcon from '@rsuite/icons/List';
-import {logout} from "../features/authSlice";
-import {useDispatch} from "react-redux";
-import {useState} from "react";
+import { logout } from "../features/authSlice";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 const Sidebar = () => {
 
@@ -36,25 +37,46 @@ const Sidebar = () => {
                 <Nav activeKey={activeKey} onSelect={setActiveKey}>
                     <Nav.Item
                         onClick={e => navigate("/admin/dashboard")}
-                        eventKey="1" icon={<DashboardIcon/>}>
+                        eventKey="1" icon={<DashboardIcon />}>
                         Dashboard
                     </Nav.Item>
                     <Nav.Menu placement="rightStart" eventKey="2" title="Passenger"
-                              icon={<PeoplesIcon/>}>
+                        icon={<PeoplesIcon />}>
                         <Nav.Item
                             eventKey="2-1"
                             onClick={e => navigate("/admin/passenger/list")}>
                             List
                         </Nav.Item>
                     </Nav.Menu>
-                    <Nav.Item eventKey="3" icon={<EventDetailIcon/>}>
-                        Booking
-                    </Nav.Item>
-                    <Nav.Item eventKey="4" icon={<FaPlaneUp className={`rs-icon`} width={`1em`}/>}>
-                        Flight
-                    </Nav.Item>
+
+                    <Nav.Menu placement="rightStart" eventKey="3" title="Booking"
+                        icon={<EventDetailIcon className={`rs-icon`} width={`1em`} />}>
+                        <Nav.Item
+                            onClick={e => navigate("/admin/booking/list")}
+                            eventKey="3-1">
+                            List
+                        </Nav.Item>
+                    </Nav.Menu>
+
+                    <Nav.Menu placement="rightStart" eventKey="4" title="Flight"
+                        icon={<FaPlaneUp className={`rs-icon`} width={`1em`} />}>
+                        <Nav.Item
+                            onClick={e => navigate("/admin/flight/list")}
+                            eventKey="4-1">
+                            List
+                        </Nav.Item>
+
+                        <Nav.Item
+                            onClick={e => navigate("/admin/flight/add")}
+                            eventKey="4-2">
+                            Add
+                        </Nav.Item>
+                    </Nav.Menu>
+
+                
+
                     <Nav.Menu placement="rightStart" eventKey="5" title="Airport"
-                              icon={<FaPlaneArrival className={`rs-icon`} width={`1em`}/>}>
+                        icon={<FaPlaneArrival className={`rs-icon`} width={`1em`} />}>
                         <Nav.Item
                             onClick={e => navigate("/admin/airport/list")}
                             eventKey="5-1">
@@ -69,7 +91,7 @@ const Sidebar = () => {
                     <Nav.Item
                         eventKey="6"
                         onClick={logoutHandler}
-                        icon={<OffIcon/>}>
+                        icon={<OffIcon />}>
                         Logout
                     </Nav.Item>
                 </Nav>
