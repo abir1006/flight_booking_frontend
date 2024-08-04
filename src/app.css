@@ -122,3 +122,56 @@ input[type=text].focus {
     color: #3f3f3f;
 }
 
+.FlightSearchSpinnerPanel {
+    font-size: 1.5rem;
+}
+
+.flightSearchIcon {
+    position: relative;
+    animation: moveX 15s infinite; /* Apply the animation */
+}
+
+@keyframes moveX {
+    0% {
+        left: 0;
+    }
+    /* Start position */
+    100% {
+        left: 300px;
+    }
+    /* Midway position */
+    /*100% {*/
+    /*    left: 0;*/
+    /*}*/
+    /* End position (back to start) */
+}
+
+.spinning {
+    animation: circle 1.2s steps(8) infinite;
+}
+
+
+@keyframes circle {
+    from {
+        transform: rotate(90deg);
+    }
+
+    to {
+        transform: rotate(450deg);
+    }
+}
+
+
+.search-result-row p {
+    font-size: 14px;
+}
+
+
+ul {
+    padding: 0;
+    list-style: none;
+}
+
+h5 {
+    font-size: 15px;
+}
