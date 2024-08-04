@@ -8,23 +8,23 @@ import {toast} from "react-toastify";
 
 const {Column, HeaderCell, Cell} = Table;
 
-const FlightList = () => {
+const BookingList = () => {
 
-    const [passengers, setFlights] = useState([]);
+    const [passengers, setBookings] = useState([]);
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const [totalRecords, setTotalRecords] = useState(0);
     const navigate = useNavigate();
 
     useEffect(() => {
-        getFlightData(page);
+        getBookingData(page);
     }, [page]);
 
-    const getFlightData = page => {
+    const getBookingData = page => {
         page = page - 1;
-        axios.get(`flights/admin/paged?page=0&size=5`)
+        axios.get(`bookings/paged?page=${page}&size=${limit}`)
             .then(res => {
-                setFlights(res.data?.content);
+                setBookings(res.data?.content);
                 setTotalRecords(res.data?.totalElements);
             })
             .catch(err => {
@@ -42,9 +42,9 @@ const FlightList = () => {
     const deleteHandler = async id => {
         const result = await confirm("Are you sure want to delete?");
         if (result) {
-            axios.delete(`flights/admin/${id}`)
+            axios.delete(`bookings/${id}`)
                 .then(res => {
-                    getFlightData(1);
+                    getBookingData(1);
                     toast.success("Successfully deleted!")
                 })
                 .catch(err => console.log(err));
@@ -58,52 +58,34 @@ const FlightList = () => {
     return (
         <div className="box">
             <Table disabledScroll autoHeight={true} data={passengers}>
-            <Column flexGrow={1}>
+                <Column width={50}>
                     <HeaderCell>ID</HeaderCell>
                     <Cell dataKey="id"/>
                 </Column>
+
                 <Column flexGrow={1}>
-                    <HeaderCell>Flight Number</HeaderCell>
-                    <Cell dataKey="flightNumber"/>
+                    <HeaderCell>Booking Date</HeaderCell>
+                    <Cell dataKey="bookingDate"/>
                 </Column>
 
                 <Column flexGrow={1}>
-                    <HeaderCell>Departure Airport</HeaderCell>
-                    <Cell dataKey="departureAirport.code"/>
+                    <HeaderCell>Flight ID</HeaderCell>
+                    <Cell dataKey="flightIds"/>
+                </Column>
+
+                <Column flexGrow={2}>
+                    <HeaderCell>Trip Type</HeaderCell>
+                    <Cell dataKey="tripType"/>
                 </Column>
 
                 <Column flexGrow={1}>
-                    <HeaderCell>Arrival Airport</HeaderCell>
-                    <Cell dataKey="arrivalAirport.code"/>
+                    <HeaderCell>Total Price</HeaderCell>
+                    <Cell dataKey="totalPrice"/>
                 </Column>
 
-                <Column flexGrow={1}>
-                    <HeaderCell>Departure Date</HeaderCell>
-                    <Cell dataKey="flightSchedule.departureDate"/>
-                </Column>
-
-                <Column flexGrow={1}>
-                    <HeaderCell>Departure Time</HeaderCell>
-                    <Cell dataKey="flightSchedule.departureTime"/>
-                </Column>
-                <Column flexGrow={1}>
-                    <HeaderCell>Arrival Date</HeaderCell>
-                    <Cell dataKey="flightSchedule.arrivalDate"/>
-                </Column>
-
-                <Column flexGrow={1}>
-                    <HeaderCell>Arrival Time</HeaderCell>
-                    <Cell dataKey="flightSchedule.arrivalTime"/>
-                </Column>
-
-                <Column flexGrow={1}>
-                    <HeaderCell>Available Seats</HeaderCell>
-                    <Cell dataKey="availableSeats"/>
-                </Column>
-
-                <Column flexGrow={1}>
-                    <HeaderCell>Ticket Price</HeaderCell>
-                    <Cell dataKey="ticketPrice"/>
+                <Column flexGrow={2}>
+                    <HeaderCell>Booking Status</HeaderCell>
+                    <Cell dataKey="status"/>
                 </Column>
 
                 <Column flexGrow={1} align="right" fixed="right">
@@ -140,4 +122,4 @@ const FlightList = () => {
     );
 };
 
-export default FlightList;
+export default BookingList;

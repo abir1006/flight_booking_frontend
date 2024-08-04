@@ -8,23 +8,23 @@ import {toast} from "react-toastify";
 
 const {Column, HeaderCell, Cell} = Table;
 
-const FlightList = () => {
+const PassengerList = () => {
 
-    const [passengers, setFlights] = useState([]);
-    const [limit, setLimit] = useState(10);
+    const [passengers, setPassengers] = useState([]);
+    const [limit, setLimit] = useState(15);
     const [page, setPage] = useState(1);
     const [totalRecords, setTotalRecords] = useState(0);
     const navigate = useNavigate();
 
     useEffect(() => {
-        getFlightData(page);
+        getPassengerData(page);
     }, [page]);
 
-    const getFlightData = page => {
+    const getPassengerData = page => {
         page = page - 1;
-        axios.get(`flights/admin/paged?page=0&size=5`)
+        axios.get(`admin/users/registered-users?page=${page}&size=${limit}`)
             .then(res => {
-                setFlights(res.data?.content);
+                setPassengers(res.data?.content);
                 setTotalRecords(res.data?.totalElements);
             })
             .catch(err => {
@@ -42,9 +42,9 @@ const FlightList = () => {
     const deleteHandler = async id => {
         const result = await confirm("Are you sure want to delete?");
         if (result) {
-            axios.delete(`flights/admin/${id}`)
+            axios.delete(`admin/users/${id}`)
                 .then(res => {
-                    getFlightData(1);
+                    getPassengerData(1);
                     toast.success("Successfully deleted!")
                 })
                 .catch(err => console.log(err));
@@ -58,52 +58,34 @@ const FlightList = () => {
     return (
         <div className="box">
             <Table disabledScroll autoHeight={true} data={passengers}>
-            <Column flexGrow={1}>
+                <Column width={50}>
                     <HeaderCell>ID</HeaderCell>
                     <Cell dataKey="id"/>
                 </Column>
+
                 <Column flexGrow={1}>
-                    <HeaderCell>Flight Number</HeaderCell>
-                    <Cell dataKey="flightNumber"/>
+                    <HeaderCell>First Name</HeaderCell>
+                    <Cell dataKey="firstname"/>
                 </Column>
 
                 <Column flexGrow={1}>
-                    <HeaderCell>Departure Airport</HeaderCell>
-                    <Cell dataKey="departureAirport.code"/>
+                    <HeaderCell>Last Name</HeaderCell>
+                    <Cell dataKey="lastname"/>
+                </Column>
+
+                <Column flexGrow={2}>
+                    <HeaderCell>Email</HeaderCell>
+                    <Cell dataKey="email"/>
                 </Column>
 
                 <Column flexGrow={1}>
-                    <HeaderCell>Arrival Airport</HeaderCell>
-                    <Cell dataKey="arrivalAirport.code"/>
+                    <HeaderCell>Phone</HeaderCell>
+                    <Cell dataKey="phone"/>
                 </Column>
 
-                <Column flexGrow={1}>
-                    <HeaderCell>Departure Date</HeaderCell>
-                    <Cell dataKey="flightSchedule.departureDate"/>
-                </Column>
-
-                <Column flexGrow={1}>
-                    <HeaderCell>Departure Time</HeaderCell>
-                    <Cell dataKey="flightSchedule.departureTime"/>
-                </Column>
-                <Column flexGrow={1}>
-                    <HeaderCell>Arrival Date</HeaderCell>
-                    <Cell dataKey="flightSchedule.arrivalDate"/>
-                </Column>
-
-                <Column flexGrow={1}>
-                    <HeaderCell>Arrival Time</HeaderCell>
-                    <Cell dataKey="flightSchedule.arrivalTime"/>
-                </Column>
-
-                <Column flexGrow={1}>
-                    <HeaderCell>Available Seats</HeaderCell>
-                    <Cell dataKey="availableSeats"/>
-                </Column>
-
-                <Column flexGrow={1}>
-                    <HeaderCell>Ticket Price</HeaderCell>
-                    <Cell dataKey="ticketPrice"/>
+                <Column flexGrow={2}>
+                    <HeaderCell>Address</HeaderCell>
+                    <Cell dataKey="address"/>
                 </Column>
 
                 <Column flexGrow={1} align="right" fixed="right">
@@ -140,4 +122,4 @@ const FlightList = () => {
     );
 };
 
-export default FlightList;
+export default PassengerList;
