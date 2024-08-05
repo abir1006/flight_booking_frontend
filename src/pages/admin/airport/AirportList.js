@@ -47,7 +47,7 @@ const AirportList = () => {
                     getAirportData(1);
                     toast.success("Successfully deleted!")
                 })
-                .catch(err => console.log(err));
+                .catch(err => toast.error("This airport has flights, Please remove flights first"));
             return;
         }
 
