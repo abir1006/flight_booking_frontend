@@ -1,11 +1,15 @@
 import {Checkbox, Slider} from "rsuite";
 import {useEffect, useState} from "react";
+import axios from "../configs/axios";
 
 const SearchFlightFilter = () => {
 
     const [airlines, setAirlines] = useState([])
 
     useEffect(() => {
+        axios.get("/flights")
+            .then( res => setAirlines(res.data))
+            .catch( err => console.log(err))
 
     }, []);
 

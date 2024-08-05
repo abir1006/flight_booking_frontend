@@ -1,32 +1,47 @@
 import {Panel} from "rsuite";
+import moment from "moment/moment";
+import {useDispatch} from "react-redux";
+import {setFlightBooking} from "../features/flightBookingSlice";
+import {useNavigate} from "react-router-dom";
 
-const SearchFlightResult = ({data}) => {
+const SearchFlightResult = ({flight}) => {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const flightBookingHandler = () => {
+        dispatch(setFlightBooking(flight));
+        navigate("/flight-booking");
+    }
+
     return <Panel className={`search-result-row mb-3`} bordered>
         <div className={`row`}>
             <div className={`col-2`}>
                 <img width={`75`}
-                     src={`https://cdn.logojoy.com/wp-content/uploads/2018/05/30142251/194.png`}/>
+                     src={flight?.flightLogo}/>
             </div>
             <div className={`col-2`}>
-                <p><strong>DAC - ORD</strong> <br/>
-                    Etihad Airways</p>
+                <p><strong>{flight?.departureAirport?.code} - {flight?.arrivalAirport?.code}</strong> <br/>
+                    Etihad Airways <br/> Flight No: {flight?.flightNumber}</p>
             </div>
             <div className={`col-3`}>
                 <p>
-                    <strong>03:30 PM</strong> <br/>
-                    11 Aug, Sunday <br/>
-                    Hazrat Shahzalal Airport
+                    <strong>{moment(flight?.flightSchedule?.departureTime, 'HH:mm:ss').format("h:mm A")}</strong> <br/>
+                    {moment(flight?.flightSchedule?.departureDate).format("MMM D, ddd")} <br/>
+                    {flight?.departureAirport?.name}
                 </p>
             </div>
             <div className={`col-3`}>
                 <p>
-                    <strong>04:45 PM</strong> <br/>
-                    12 Aug, Sunday <br/>
-                    Dubai International ...
+                    <strong>{moment(flight?.flightSchedule?.arrivalTime, 'HH:mm:ss').format("h:mm A")}</strong> <br/>
+                    {moment(flight?.flightSchedule?.arrivalDate).format("MMM D, ddd")} <br/>
+                    {flight?.arrivalAirport?.name}
                 </p></div>
             <div className={`col-2 text-center`}>
-                <p><strong>$505 USD</strong>
-                    <button className={`btn mx-3 mt-2`}>
+                <p><strong>${flight?.ticketPrice} USD</strong>
+                    <button
+                        onClick={flightBookingHandler}
+                        className={`btn mx-3 mt-2`}>
                         Select >
                     </button>
                 </p>

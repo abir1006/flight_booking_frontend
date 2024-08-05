@@ -3,6 +3,7 @@ import authSlice from "../features/authSlice";
 import usersSlice from "../features/usersSlice";
 import flightSlice from "../features/flightSlice";
 import flightQuerySlice from "../features/flightQuerySlice";
+import flightBookingSlice from "../features/flightBookingSlice";
 
 
 const store = configureStore({
@@ -10,7 +11,8 @@ const store = configureStore({
         auth: authSlice,
         users: usersSlice,
         flights: flightSlice,
-        flightQuery: flightQuerySlice
+        flightQuery: flightQuerySlice,
+        flightBooking: flightBookingSlice
     }
 });
 

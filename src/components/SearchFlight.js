@@ -13,16 +13,14 @@ const SearchFlight = ({searchData}) => {
     const [spinner, setSpinner] = useState(false);
     const searchQuery = useSelector(state => state?.flightQuery)
 
+    const [flights, setFlights] = useState([])
+
     useEffect(() => {
         setSpinner(true);
-        // setTimeout(() => {
-        //     setSpinner(false);
-        // }, 5000)
-
         axios.get("/flights/search", {
             params: searchQuery
         }).then(res => {
-            console.log(res.data);
+            setFlights(res.data)
             setTimeout(() => {
                 setSpinner(false);
             }, 2000)
@@ -60,8 +58,11 @@ const SearchFlight = ({searchData}) => {
             <div className={`col-9`}>
                 <div className={`box`}>
                     <div className={`mt-3`}>
-                        <SearchFlightResult data={data}/>
-                        <SearchFlightResult data={data}/>
+                        {
+                            flights.map(flight => {
+                                return <SearchFlightResult flight={flight}/>
+                            })
+                        }
                     </div>
                 </div>
             </div>

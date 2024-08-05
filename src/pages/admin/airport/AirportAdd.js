@@ -34,8 +34,6 @@ const AirportAdd = () => {
             return errors;
         },
         onSubmit: data => {
-            //alert(JSON.stringify(values, null, 2));
-
             axios.post("/airports", data)
                 .then(res => {
                     navigate("/admin/airport/list");

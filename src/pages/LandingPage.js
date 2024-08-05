@@ -47,7 +47,11 @@ const LandingPage = () => {
     }
 
     const searchFlightHandler = () => {
-        setShowSearchFlight(true);
+        setShowSearchFlight(false);
+        setTimeout(() => {
+            setShowSearchFlight(true);
+        }, 1)
+
     }
 
     const searchFrom = value => {
@@ -63,7 +67,7 @@ const LandingPage = () => {
     }
 
     const passengerCount = value => {
-        dispatch(setQuery({availableSeats: value}))
+        dispatch(setQuery({travellers: value}))
     }
 
     const tripTypeHandler = value => {
@@ -72,10 +76,10 @@ const LandingPage = () => {
 
     const travellingDateHandler = date => {
         if (date.length > 1) {
-            dispatch(setQuery({flyingDate: moment(date[0]).format("MM/DD/YYYY")}))
-            dispatch(setQuery({returnDate: moment(date[1]).format("MM/DD/YYYY")}))
+            dispatch(setQuery({startDate: moment(date[0]).format("YYYY-MM-DD")}))
+            dispatch(setQuery({endDate: moment(date[1]).format("YYYY-MM-DD")}))
         } else {
-            dispatch(setQuery({flyingDate: moment(date).format("MM/DD/YYYY")}))
+            dispatch(setQuery({startDate: moment(date).format("YYYY-MM-DD")}))
         }
     }
 
