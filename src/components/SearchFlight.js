@@ -58,8 +58,9 @@ const SearchFlight = ({searchData}) => {
             <div className={`col-9`}>
                 <div className={`box`}>
                     <div className={`mt-3`}>
+                        {flights.length == 0 && <p className={`text-center`}>No flight found</p>}
                         {
-                            flights.map(flight => {
+                            flights.length > 0 && flights.map(flight => {
                                 return <SearchFlightResult flight={flight}/>
                             })
                         }

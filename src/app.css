@@ -3,7 +3,13 @@ body {
 }
 
 .bg-wrapper {
-    background: url("../public/images/mainBackground.jpg") no-repeat top center;
+    /*background: url("../public/images/mainBackground.jpg") no-repeat top center;*/
+
+    background-color:#ff9999;
+    background-image: url("../public/images/mainBackground.jpg");
+    background-position:top center;
+    background-repeat:no-repeat;
+    background-size:100% auto;
     height: 100vh;
 }
 
@@ -162,7 +168,7 @@ input[type=text].focus {
 }
 
 
-.search-result-row p {
+.search-result-row p, p.flightInformation {
     font-size: 14px;
 }
 
@@ -170,6 +176,11 @@ input[type=text].focus {
 ul {
     padding: 0;
     list-style: none;
+}
+
+h4 {
+    font-size: 18px;
+    color: darkslateblue;
 }
 
 h5 {

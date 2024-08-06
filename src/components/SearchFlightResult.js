@@ -1,17 +1,27 @@
 import {Panel} from "rsuite";
 import moment from "moment/moment";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setFlightBooking} from "../features/flightBookingSlice";
 import {useNavigate} from "react-router-dom";
+import {setPrevRoute} from "../features/userRouteSlice";
+import {toast} from "react-toastify";
 
 const SearchFlightResult = ({flight}) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isUserAuthenticated = useSelector(state => state?.auth?.isAuthenticated)
 
     const flightBookingHandler = () => {
         dispatch(setFlightBooking(flight));
-        navigate("/flight-booking");
+        if (isUserAuthenticated) {
+            navigate("/flight-booking");
+        } else {
+            dispatch(setPrevRoute({prevRoute: "/flight-booking"}))
+            toast.warn("Please login to continue booking!")
+            navigate("/login");
+        }
+
     }
 
     return <Panel className={`search-result-row mb-3`} bordered>

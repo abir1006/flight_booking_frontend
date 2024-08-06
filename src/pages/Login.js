@@ -1,4 +1,4 @@
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {loginSuccess} from "../features/authSlice";
 import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
@@ -13,6 +13,7 @@ import {faSpinner} from "@fortawesome/free-solid-svg-icons/faSpinner";
 const Login = () => {
 
     const dispatch = useDispatch();
+    const prevRoute = useSelector(state => state?.userRoute?.prevRoute);
     const navigate = useNavigate();
     const [form, setForm] = useState({
         email: "",
@@ -67,7 +68,12 @@ const Login = () => {
                 toast.success("Successfully logged in!")
 
                 if (authUserRole === 'USER') {
-                    navigate("/");
+                    if (prevRoute) {
+                        navigate(prevRoute);
+                    } else {
+                        navigate("/");
+                    }
+
                 } else {
                     navigate("/admin/dashboard");
                 }

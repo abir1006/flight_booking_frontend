@@ -4,6 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../features/authSlice";
 import {Dropdown} from "rsuite";
+import {setPrevRoute} from "../features/userRouteSlice";
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -11,6 +12,7 @@ const Header = () => {
     const authUser = useSelector(state => state.auth);
 
     const logoutHandler = () => {
+        dispatch(setPrevRoute(null))
         dispatch(logout());
         navigate("/login");
     }
