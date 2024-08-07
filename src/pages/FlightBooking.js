@@ -20,6 +20,7 @@ const FlightBooking = () => {
     const navigate = useNavigate();
     const [paymentOption, setPaymentOption] = useState(null);
     const dispatch = useDispatch();
+    const auth = useSelector(state => state?.auth);
 
     const passengerFields = {
         firstName: '',
@@ -30,8 +31,18 @@ const FlightBooking = () => {
 
     const passengers = [];
 
-    [...Array(parseInt(travellers))].map(v => {
-        passengers.push(passengerFields);
+    [...Array(parseInt(travellers))].map((v, i) => {
+        if (i == 0) {
+            passengers.push({
+                firstName: auth?.user?.firstname,
+                lastName: auth?.user?.lastname,
+                email: auth?.user?.email,
+                phone: auth?.user?.phone
+            });
+        } else {
+            passengers.push(passengerFields);
+        }
+
     })
 
     const tripTypes = {
@@ -134,21 +145,30 @@ const FlightBooking = () => {
                                                 name={`passengers.${index}.lastName`}
                                                 placeholder="Last Name"
                                                 value={formik.values.passengers[index]["lastName"]}
-                                                //error={formik.errors.passengers[index]["lastName"]}
+                                                error={
+                                                    formik.touched.passengers?.[index]?.["lastName"] &&
+                                                    formik.errors.passengers?.[index]?.["lastName"]
+                                                }
                                                 onChange={value => formik.setFieldValue(`passengers[${index}].lastName`, value)}
                                             />
                                             <InputField
                                                 name={`passengers.${index}.email`}
                                                 placeholder="Email"
                                                 value={formik.values.passengers[index]["email"]}
-                                                //error={formik.errors.passengers[index]["email"]}
+                                                error={
+                                                    formik.touched.passengers?.[index]?.["email"] &&
+                                                    formik.errors.passengers?.[index]?.["email"]
+                                                }
                                                 onChange={value => formik.setFieldValue(`passengers[${index}].email`, value)}
                                             />
                                             <InputField
                                                 name={`passengers.${index}.phone`}
                                                 placeholder="Phone"
                                                 value={formik.values.passengers[index]["phone"]}
-                                                //error={formik.errors.passengers[index]["phone"]}
+                                                error={
+                                                    formik.touched.passengers?.[index]?.["phone"] &&
+                                                    formik.errors.passengers?.[index]?.["phone"]
+                                                }
                                                 onChange={value => formik.setFieldValue(`passengers[${index}].phone`, value)}
                                             />
                                         </div>

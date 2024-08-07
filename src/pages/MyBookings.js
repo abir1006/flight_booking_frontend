@@ -10,8 +10,8 @@ const MyBookings = () => {
     const authUserId = 1;
     const [allBookings, setAllBookings] = useState([]);
     useEffect(() => {
-        axios.get(`/bookings/${authUserId}`)
-            .then(res => setAllBookings(res.data))
+        axios.get(`/bookings/by-passenger-email?email=john.doe@example.com`)
+            .then(res => setAllBookings(res.data?.content))
             .catch(err => console.log(err));
     }, []);
 
@@ -31,12 +31,21 @@ const MyBookings = () => {
                             <Cell dataKey="id"/>
                         </Column>
 
-                        <Column flexGrow={1}>
+                        <Column flexGrow={2}>
                             <HeaderCell>Booking Date</HeaderCell>
                             <Cell dataKey="bookingDate"/>
                         </Column>
 
-                        <Column flexGrow={1}>
+                        <Column flexGrow={2}>
+                            <HeaderCell>Passenger(s)</HeaderCell>
+                            <Cell>
+                                {
+                                    rowData => rowData.passengers.map(p => p.firstName + ' ' + p.lastName)
+                                }
+                            </Cell>
+                        </Column>
+
+                        <Column flexGrow={2}>
                             <HeaderCell>Flight</HeaderCell>
                             <Cell dataKey="flightIds"/>
                         </Column>
@@ -48,24 +57,14 @@ const MyBookings = () => {
 
                         <Column flexGrow={1}>
                             <HeaderCell>Total Price</HeaderCell>
-                            <Cell dataKey="totalPrice"/>
+                            <Cell dataKey="totalPrice">
+                                {rowData => '$' + rowData.totalPrice}
+                            </Cell>
                         </Column>
 
                         <Column flexGrow={2}>
                             <HeaderCell>Booking Status</HeaderCell>
                             <Cell dataKey="status"/>
-                        </Column>
-
-                        <Column flexGrow={1} align="right" fixed="right">
-                            <HeaderCell></HeaderCell>
-                            <Cell className="table_action" style={{padding: '6px'}}>
-                                {rowData => (
-                                    <>
-                                        <FaTrash className="mx-2" width="0.5em"
-                                                 onClick={() => bookingCancelHandler(rowData.id)}/>
-                                    </>
-                                )}
-                            </Cell>
                         </Column>
                     </Table>
                 </div>
