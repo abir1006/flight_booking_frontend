@@ -1,19 +1,19 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    productLoading: false
+    show: false
 };
 const spinnerSlice = createSlice({
-    name: "spinner",
+    name: "spinnerContainer",
     initialState,
     reducers: {
-        productLoadingSpinner: (state, action) => {
-            state.productLoading = action.payload;
+        setSpinnerContainer: (state, action) => {
+            return action.payload;
         }
     }
 });
 
 export default spinnerSlice.reducer;
 export const {
-    productLoadingSpinner
+    setSpinnerContainer
 } = spinnerSlice.actions;

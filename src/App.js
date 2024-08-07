@@ -5,6 +5,7 @@ import {BrowserRouter, Routes} from 'react-router-dom'
 import AdminRoutes from "./routes/adminRoutes";
 import PageRoutes from "./routes/pageRoutes";
 import Popup from "./components/Popup";
+import SpinnerContainer from "./components/SpinnerContainer";
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
             <AdminRoutes/>
             <PageRoutes/>
             <Popup />
+            <SpinnerContainer />
         </BrowserRouter>
     )
 }

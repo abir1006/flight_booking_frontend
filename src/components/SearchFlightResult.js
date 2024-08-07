@@ -28,11 +28,11 @@ const SearchFlightResult = ({flight}) => {
         <div className={`row`}>
             <div className={`col-2`}>
                 <img width={`75`}
-                     src={flight?.flightLogo}/>
+                     src={flight?.airlineLogo}/>
             </div>
             <div className={`col-2`}>
                 <p><strong>{flight?.departureAirport?.code} - {flight?.arrivalAirport?.code}</strong> <br/>
-                    Etihad Airways <br/> Flight No: {flight?.flightNumber}</p>
+                    {flight?.airlineName} <br/> Flight No: {flight?.flightNumber}</p>
             </div>
             <div className={`col-3`}>
                 <p>

@@ -1,5 +1,5 @@
 import SiteLayout from "../layout/SiteLayout";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
 import axios from "../configs/axios";
 import {toast} from "react-toastify";
@@ -7,6 +7,9 @@ import InputField from "../components/InputField";
 import {Button, Form, Radio, RadioGroup} from "rsuite";
 import * as Yup from 'yup';
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
+import Stripe from "react-stripe-checkout";
+import {setSpinnerContainer} from "../features/spinnerSlice";
 
 
 const FlightBooking = () => {
@@ -15,6 +18,8 @@ const FlightBooking = () => {
     const travellers = useSelector(state => state.flightQuery?.travellers || 0);
     const tripType = useSelector(state => state.flightQuery?.tripType || 1);
     const navigate = useNavigate();
+    const [paymentOption, setPaymentOption] = useState(null);
+    const dispatch = useDispatch();
 
     const passengerFields = {
         firstName: '',
@@ -52,7 +57,10 @@ const FlightBooking = () => {
 
         },
         validationSchema,
-        onSubmit: data => {
+        onSubmit: async data => {
+
+            dispatch(setSpinnerContainer({show: true}))
+
             let bookingData = {
                 "tripType": tripTypes[tripType],
                 "flightId": flightBooking.id,
@@ -60,15 +68,45 @@ const FlightBooking = () => {
                 "passengers": data.passengers
             }
 
-            axios.post("/bookings/book", bookingData)
-                .then(res => {
-                    toast.success("Successfully booked your flight!")
-                    navigate("/my-bookings");
-                }).catch(err => {
+            try {
+
+                // create Booking
+                const bookingReq = await axios.post("/bookings/book", bookingData);
+
+                // make Payment
+                const makePayment = await axios.post("/credit-card/charge", "", {
+                    headers: {
+                        token: data.token,
+                        amount: bookingData.totalPrice,
+                    },
+                });
+
+                // Confirm booking
+                const bookingConfirm = await axios.post(`/bookings/confirm/${bookingReq.data.id}`);
+
+                dispatch(setSpinnerContainer({show: false}))
+
+                toast.success("Successfully booked your flight!");
+
+                navigate("/my-bookings");
+
+
+            } catch (err) {
                 console.log(err);
-            });
+                dispatch(setSpinnerContainer({show: false}))
+                toast.error("Payment failed, try again!");
+            }
         }
     });
+
+    async function handleCardPayment(token) {
+        formik.setFieldValue("token", token.id);
+        formik.handleSubmit();
+    }
+
+    const paymentOptionHandler = v => {
+        setPaymentOption(v);
+    }
 
     return <SiteLayout>
         <div className={`row`}>
@@ -116,11 +154,30 @@ const FlightBooking = () => {
                                         </div>
                                     })
                                 }
-                                <Button
-                                    className={`float-end my-3`}
-                                    appearance="default" type="submit">
-                                    Pay and proceed for booking
-                                </Button>
+                                {
+                                    paymentOption !== 'creditCard' && <Button
+                                        disabled={true}
+                                        className={`float-end my-3`}
+                                        appearance="default" type="submit">
+                                        Pay and proceed for booking
+                                    </Button>
+                                }
+
+                                {
+                                    paymentOption === 'creditCard' && <Stripe
+
+                                        token={handleCardPayment}
+
+                                        stripeKey="pk_test_z9ub1a8Mi5WggbhUVCFVpmiR">
+                                        <Button
+                                            className={`float-end my-3`}
+                                            appearance="default"
+                                            type="button">
+                                            Pay and proceed for booking
+                                        </Button>
+                                    </Stripe>
+                                }
+
                             </Form>
                         </div>
                         <div className={`col-4`}>
@@ -134,12 +191,10 @@ const FlightBooking = () => {
 
                             <h4 className={`my-3`}>Payment information</h4>
 
-                            <RadioGroup name="radio-group" defaultValue="A">
-                                <Radio value="A">Pay with PayPal</Radio>
-                                <Radio value="B">Pay with VISA</Radio>
-                                <Radio value="C">Pay with MasterCard</Radio>
+                            <RadioGroup onChange={paymentOptionHandler} name="radio-group" defaultValue="A">
+                                <Radio value="paypal">Pay with PayPal</Radio>
+                                <Radio value="creditCard">Pay with VISA/ MasterCard/ Discover</Radio>
                             </RadioGroup>
-
 
                         </div>
                     </div>

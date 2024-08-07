@@ -5,6 +5,7 @@ import flightSlice from "../features/flightSlice";
 import flightQuerySlice from "../features/flightQuerySlice";
 import flightBookingSlice from "../features/flightBookingSlice";
 import userRouteSlice from "../features/userRouteSlice";
+import spinnerSlice from "../features/spinnerSlice";
 
 
 const store = configureStore({
@@ -15,6 +16,7 @@ const store = configureStore({
         flightQuery: flightQuerySlice,
         flightBooking: flightBookingSlice,
         userRoute: userRouteSlice,
+        spinnerContainer: spinnerSlice,
     }
 });
 

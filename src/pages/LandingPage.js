@@ -147,6 +147,7 @@ const LandingPage = () => {
                                         <FaUser/>
                                     </InputGroup.Addon>
                                     <InputNumber
+                                        defaultValue={1}
                                         onChange={passengerCount}
                                         placeholder={`Traveller`}/>
                                 </InputGroup>

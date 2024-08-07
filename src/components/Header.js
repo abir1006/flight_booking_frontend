@@ -29,7 +29,7 @@ const Header = () => {
                     to={'/register'}>Register</Link></>}
                 {authUser.isAuthenticated &&
                     <Dropdown title={`Welcome ${authUser?.user?.firstname || authUser?.user?.email}`}>
-                        <Dropdown.Item>My bookings</Dropdown.Item>
+                        <Dropdown.Item onClick={ e => navigate("/my-bookings")}>My bookings</Dropdown.Item>
                         <Dropdown.Item onClick={logoutHandler}>Logout</Dropdown.Item>
                     </Dropdown>}
             </div>
