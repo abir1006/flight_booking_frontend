@@ -11,11 +11,15 @@ const flightQuerySlice = createSlice({
             const key = Object.keys(action.payload)[0];
             const value = Object.values(action.payload)[0];
             state[key] = value;
+        },
+        resetQuery: (state, action) => {
+            return action.payload
         }
     }
 });
 
 export default flightQuerySlice.reducer;
 export const {
-    setQuery
+    setQuery,
+    resetQuery
 } = flightQuerySlice.actions;

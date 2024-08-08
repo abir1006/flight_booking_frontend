@@ -11,7 +11,7 @@ import {FaUser} from "react-icons/fa6";
 import {useNavigate} from "react-router-dom";
 import SearchFlight from "../components/SearchFlight";
 import {useDispatch, useSelector} from "react-redux";
-import {setQuery} from "../features/flightQuerySlice";
+import {resetQuery, setQuery} from "../features/flightQuerySlice";
 import moment from "moment/moment";
 
 const LandingPage = () => {
@@ -26,7 +26,13 @@ const LandingPage = () => {
     const tripType = useSelector(state => state?.flightQuery?.tripType || 1);
 
     useEffect(() => {
+        console.log("landing page")
+        dispatch(resetQuery({
+            travellers: 1,
+            startDate: moment().format("YYYY-MM-DD")
+        }))
         getAirportData();
+
     }, []);
 
     const getAirportData = page => {

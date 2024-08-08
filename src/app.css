@@ -197,3 +197,9 @@ h5 {
     position: absolute;
     top: 45%;
 }
+
+.rs-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
