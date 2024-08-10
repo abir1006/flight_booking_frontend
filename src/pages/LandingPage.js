@@ -29,6 +29,7 @@ const LandingPage = () => {
         console.log("landing page")
         dispatch(resetQuery({
             travellers: 1,
+            tripType: 1,
             startDate: moment().format("YYYY-MM-DD")
         }))
         getAirportData();
@@ -106,6 +107,7 @@ const LandingPage = () => {
                             className={`btn ${tripType === 1 && `selected` || ``}`}>One Way
                         </button>
                         <button
+                            disabled={true}
                             onClick={e => tripTypeHandler(2)}
                             className={`btn mx-2 ${tripType === 2 && ` selected`}`}>Round Trip
                         </button>

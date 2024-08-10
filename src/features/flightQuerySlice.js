@@ -1,7 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    travellers: 1
+    travellers: 1,
+    tripType: 1
 };
 const flightQuerySlice = createSlice({
     name: "flightQuery",

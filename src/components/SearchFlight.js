@@ -7,6 +7,7 @@ import SearchFlightFilter from "./SearchFlightFilter";
 import SearchFlightResult from "./SearchFlightResult";
 import axios from "../configs/axios";
 import {useSelector} from "react-redux";
+const qs = require('qs');
 
 const SearchFlight = ({searchData}) => {
 
@@ -18,9 +19,17 @@ const SearchFlight = ({searchData}) => {
     useEffect(() => {
         setSpinner(true);
         axios.get("/flights/search", {
-            params: searchQuery
+            params: searchQuery,
+            paramsSerializer: params => {
+                return qs.stringify(params)
+            }
         }).then(res => {
-            setFlights(res.data)
+            if (searchQuery.tripType == 1) {
+                setFlights(res.data[0])
+            } else {
+                setFlights(res.data)
+            }
+
             setTimeout(() => {
                 setSpinner(false);
             }, 2000)
@@ -29,14 +38,16 @@ const SearchFlight = ({searchData}) => {
             setSpinner(false)
         })
 
-    }, []);
+    }, [searchQuery]);
 
     const data = []
 
     return <div className={`row mt-3`}>
-
-        {spinner && <div className={`col-12`}>
-            <div className={`box`}>
+        <div className={`col-3`}>
+            <SearchFlightFilter/>
+        </div>
+        <div className={`col-9`}>
+            {spinner && <div className={`box`}>
                 <div className={`FlightSearchSpinnerPanel`}>
                     <FontAwesomeIcon icon={faSpinner} spin={true}/> Searching flight <span
                     className={`flightSearchIcon`}><FaPlane/></span>
@@ -48,27 +59,19 @@ const SearchFlight = ({searchData}) => {
                     </Panel>
                 </div>
             </div>
-        </div>
-        }
-
-        {!spinner && <>
-            <div className={`col-3`}>
-                <SearchFlightFilter/>
-            </div>
-            <div className={`col-9`}>
-                <div className={`box`}>
-                    <div className={`mt-3`}>
-                        {flights.length == 0 && <p className={`text-center`}>No flight found</p>}
-                        {
-                            flights.length > 0 && flights.map(flight => {
-                                return <SearchFlightResult flight={flight}/>
-                            })
-                        }
-                    </div>
+            }
+            {!spinner && <div className={`box`}>
+                <div className={`mt-3`}>
+                    {flights.length == 0 && <p className={`text-center`}>No flight found</p>}
+                    {
+                        flights.length > 0 && flights.map(flight => {
+                            return <SearchFlightResult flight={flight}/>
+                        })
+                    }
                 </div>
-            </div>
-        </>
-        }
+            </div>}
+        </div>
+
     </div>
 }
 

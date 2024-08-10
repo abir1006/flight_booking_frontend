@@ -1,19 +1,33 @@
-import {Checkbox, Slider} from "rsuite";
+import {Checkbox, CheckboxGroup, CheckTree, Slider} from "rsuite";
 import {useEffect, useState} from "react";
 import axios from "../configs/axios";
+import {useDispatch} from "react-redux";
+import {setQuery} from "../features/flightQuerySlice";
 
 const SearchFlightFilter = () => {
 
     const [airlines, setAirlines] = useState([])
+    const [airlineId, setAirlineId] = useState([])
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        axios.get("/flights")
-            .then( res => setAirlines(res.data))
-            .catch( err => console.log(err))
+        axios.get("/airlines")
+            .then(res => setAirlines(res.data))
+            .catch(err => console.log(err))
 
     }, []);
 
+    const airlineFilterHandler = airlineIds => {
+        setAirlineId(airlineIds);
+        dispatch(setQuery({airlines: airlineIds}))
+    }
+
     const [value, setValue] = useState(0);
+
+    const priceChangeHandler = price => {
+        dispatch(setQuery({ticketPrice: price}))
+    };
+
 
     return <div className={`box`}>
         <div className={`mt-3`}>
@@ -28,15 +42,24 @@ const SearchFlightFilter = () => {
                 onChange={value => {
                     setValue(value);
                 }}
+                onChangeCommitted={priceChangeHandler}
             /></div>
             <p className={`p-3 text-center mb-3`}>${value} USD</p>
             <h5 className={`mt-3 mb-2`}>Airlines</h5>
-            <div>
-                <ul>
-                    <li><Checkbox>Qatar Airways</Checkbox></li>
-                    <li><Checkbox>Emirates</Checkbox></li>
-                    <li><Checkbox>Turkish Airlines</Checkbox></li>
-                </ul>
+            <div className={`airlinesFilter`}>
+                <CheckboxGroup
+                    name="checkbox-group"
+                    value={airlineId}
+                    onChange={value => {
+                        airlineFilterHandler(value);
+                    }}>
+                    {
+                        airlines.map((item, index) => {
+                            return <Checkbox value={item.id}>{item.airlineName}</Checkbox>
+                        })
+                    }
+
+                </CheckboxGroup>
             </div>
 
         </div>
