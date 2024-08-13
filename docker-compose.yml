@@ -1,7 +1,11 @@
-version: '3'
+version: '3.8'
 
 services:
-  flight-booking-frontend:
-    build: .
+  flight_booking_frontend:
+    image: flight_booking_frontend
+    container_name: flight_booking_frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "3000:80"
+      - 3000:3000

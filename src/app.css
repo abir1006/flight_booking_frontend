@@ -216,3 +216,11 @@ h5 {
     color: white;
     font-weight: bold;
 }
+
+.returnFlightCell {
+    height: 100px;
+}
+
+.returnFlightPrice {
+    padding-top: 50px;
+}

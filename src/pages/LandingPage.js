@@ -107,7 +107,6 @@ const LandingPage = () => {
                             className={`btn ${tripType === 1 && `selected` || ``}`}>One Way
                         </button>
                         <button
-                            disabled={true}
                             onClick={e => tripTypeHandler(2)}
                             className={`btn mx-2 ${tripType === 2 && ` selected`}`}>Round Trip
                         </button>

@@ -64,9 +64,12 @@ const SearchFlight = ({searchData}) => {
                 <div className={`mt-3`}>
                     {flights.length == 0 && <p className={`text-center`}>No flight found</p>}
                     {
-                        flights.length > 0 && flights.map(flight => {
+                        (flights.length > 0 && searchQuery.tripType == 1) && flights.map(flight => {
                             return <SearchFlightResult flight={flight}/>
                         })
+                    }
+                    {
+                        (flights.length > 0 && searchQuery.tripType == 2) && <SearchFlightResult flight={flights}/>
                     }
                 </div>
             </div>}

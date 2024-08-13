@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "../store";
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080/api/v1/"
+    baseURL: process.env.REACT_APP_BACKEND_URL
 })
 
 axiosInstance.interceptors.request.use(
