@@ -15,9 +15,29 @@ const SearchFlightResult = ({flight}) => {
     const flights = flight;
 
     const flightBookingHandler = () => {
-        if (tripType == 1) {
-            dispatch(setFlightBooking(flight));
+
+        let finalBooking = [];
+        finalBooking.push(flight);
+        dispatch(setFlightBooking(finalBooking));
+
+
+        if (isUserAuthenticated) {
+            navigate("/flight-booking");
+        } else {
+            dispatch(setPrevRoute({prevRoute: "/flight-booking"}))
+            toast.warn("Please login to continue booking!")
+            navigate("/login");
         }
+
+    }
+
+    const roundTripFlightBookingHandler = (flight1, flight2) => {
+
+        let finalBooking = [];
+        finalBooking.push(flight1);
+        finalBooking.push(flight2);
+
+        dispatch(setFlightBooking(finalBooking));
 
         if (isUserAuthenticated) {
             navigate("/flight-booking");
@@ -130,7 +150,7 @@ const SearchFlightResult = ({flight}) => {
                                     <p>
                                         <strong>${flight[0][i]?.ticketPrice + flight[1][index2]?.ticketPrice} USD</strong>
                                         <button
-                                            onClick={flightBookingHandler}
+                                            onClick={e => roundTripFlightBookingHandler(flight[0][i], flight[1][index2])}
                                             className={`btn mx-3 mt-2`}>
                                             Select >
                                         </button>

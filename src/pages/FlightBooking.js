@@ -14,9 +14,9 @@ import {setSpinnerContainer} from "../features/spinnerSlice";
 
 const FlightBooking = () => {
 
-    const flightBooking = useSelector(state => state.flightBooking);
-    const travellers = useSelector(state => state.flightQuery?.travellers || 0);
-    const tripType = useSelector(state => state.flightQuery?.tripType || 1);
+    const flightBooking = useSelector(state => state?.flightBooking || []);
+    const travellers = useSelector(state => state?.flightQuery?.travellers || 0);
+    const tripType = useSelector(state => state?.flightQuery?.tripType || 1);
     const navigate = useNavigate();
     const [paymentOption, setPaymentOption] = useState(null);
     const dispatch = useDispatch();
@@ -74,9 +74,14 @@ const FlightBooking = () => {
 
             let bookingData = {
                 "tripType": tripTypes[tripType],
-                "flightId": flightBooking.id,
-                "totalPrice": flightBooking?.ticketPrice * travellers,
+                "flightId": flightBooking[0]?.id,
+                "totalPrice": flightBooking[0]?.ticketPrice * travellers,
                 "passengers": data.passengers
+            }
+
+            if (tripType == 2) {
+                bookingData["totalPrice"] = flightBooking[0]?.ticketPrice + flightBooking[1]?.ticketPrice * travellers;
+                bookingData["returnFlightId"] = flightBooking[1]?.id;
             }
 
             try {
@@ -202,12 +207,18 @@ const FlightBooking = () => {
                         </div>
                         <div className={`col-4`}>
                             <h4 className={`mb-3`}>Flight information</h4>
-                            <p className={`flightInformation`}>
-                                <strong>{flightBooking?.departureAirport?.code} - {flightBooking?.arrivalAirport?.code}</strong>
-                                <br/>
-                                Etihad Airways <br/> Flight No: {flightBooking?.flightNumber}</p>
+                            {flightBooking?.length > 0 && flightBooking.map(booking => {
+                                return <p className={`flightInformation`}>
+                                    <strong>{booking?.departureAirport?.code} - {booking?.arrivalAirport?.code}</strong>
+                                    <br/>
+                                    {booking?.airlineName} <br/> Flight No: {booking?.flightNumber}</p>
 
-                            <p><strong>Total: ${flightBooking?.ticketPrice * travellers} USD</strong></p>
+                            })}
+
+
+                            <p><strong>Total:
+                                ${flightBooking[0]?.ticketPrice + flightBooking[1]?.ticketPrice * travellers} USD</strong>
+                            </p>
 
                             <h4 className={`my-3`}>Payment information</h4>
 

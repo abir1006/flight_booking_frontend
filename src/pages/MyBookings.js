@@ -52,7 +52,7 @@ const MyBookings = () => {
                             <HeaderCell>Passenger(s)</HeaderCell>
                             <Cell>
                                 {
-                                    rowData => rowData.passengers.map(p => p.firstName + ' ' + p.lastName)
+                                    rowData => rowData.passengers.map(p => p.firstName + ' ' + p.lastName + ', ')
                                 }
                             </Cell>
                         </Column>
