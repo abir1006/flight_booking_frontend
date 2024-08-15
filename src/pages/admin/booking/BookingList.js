@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
 import {Pagination, Table} from 'rsuite';
 import axios from "../../../configs/axios";
-import {FaTrash} from "react-icons/fa6";
+import {FaEye, FaTrash} from "react-icons/fa6";
 import {confirm} from "react-confirm-box";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import {FaTimes} from "react-icons/fa";
 
 const {Column, HeaderCell, Cell} = Table;
 
@@ -40,12 +41,12 @@ const BookingList = () => {
     };
 
     const deleteHandler = async id => {
-        const result = await confirm("Are you sure want to delete?");
+        const result = await confirm("Are you sure want to cancel?");
         if (result) {
-            axios.delete(`bookings/${id}`)
+            axios.delete(`bookings/cancel/${id}`)
                 .then(res => {
-                    getBookingData(1);
-                    toast.success("Successfully deleted!")
+                    getBookingData(page);
+                    toast.success("Successfully canceled!")
                 })
                 .catch(err => console.log(err));
             return;
@@ -69,8 +70,12 @@ const BookingList = () => {
                 </Column>
 
                 <Column flexGrow={1}>
-                    <HeaderCell>Flight ID</HeaderCell>
-                    <Cell dataKey="flightIds"/>
+                    <HeaderCell>Booked By</HeaderCell>
+                    <Cell>
+                        {
+                            rowData => rowData.passengers[0].firstName + ' ' + rowData.passengers[0].lastName
+                        }
+                    </Cell>
                 </Column>
 
                 <Column flexGrow={2}>
@@ -93,7 +98,13 @@ const BookingList = () => {
                     <Cell className="table_action" style={{padding: '6px'}}>
                         {rowData => (
                             <>
-                                <FaTrash className="mx-2" width="0.5em" onClick={() => deleteHandler(rowData.id)}/>
+                                <FaEye title={`See booking details`} className="mx-3" width="0.5em"/>
+                                <FaTimes
+                                    title={`Cancel booking`}
+                                    style={{color: "red"}}
+                                    className="mx-3"
+                                    width="0.5em"
+                                    onClick={() => deleteHandler(rowData.id)}/>
                             </>
                         )}
                     </Cell>

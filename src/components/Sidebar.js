@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Nav, Sidenav } from "rsuite";
 import {
+    FaMoneyBill, FaMoneyCheckDollar,
     FaPaperPlane,
     FaPlaneArrival,
     FaPlaneUp,
@@ -74,7 +75,6 @@ const Sidebar = () => {
                     </Nav.Menu>
 
                 
-
                     <Nav.Menu placement="rightStart" eventKey="5" title="Airport"
                         icon={<FaPlaneArrival className={`rs-icon`} width={`1em`} />}>
                         <Nav.Item
@@ -88,6 +88,16 @@ const Sidebar = () => {
                             Add
                         </Nav.Item>
                     </Nav.Menu>
+
+                    <Nav.Menu placement="rightStart" eventKey="6" title="Payment"
+                              icon={<FaMoneyCheckDollar className={`rs-icon`} width={`1em`} />}>
+                        <Nav.Item
+                            onClick={e => navigate("/admin/payment/history")}
+                            eventKey="6-1">
+                            History
+                        </Nav.Item>
+                    </Nav.Menu>
+
                     <Nav.Item
                         eventKey="6"
                         onClick={logoutHandler}

@@ -19,7 +19,7 @@ const SearchFlightFilter = () => {
 
     const airlineFilterHandler = airlineIds => {
         setAirlineId(airlineIds);
-        dispatch(setQuery({airlines: airlineIds}))
+        dispatch(setQuery({airlines: airlineIds.join(",")}))
     }
 
     const [value, setValue] = useState(0);

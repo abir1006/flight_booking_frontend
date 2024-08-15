@@ -87,17 +87,6 @@ const PassengerList = () => {
                     <HeaderCell>Address</HeaderCell>
                     <Cell dataKey="address"/>
                 </Column>
-
-                <Column flexGrow={1} align="right" fixed="right">
-                    <HeaderCell></HeaderCell>
-                    <Cell className="table_action" style={{padding: '6px'}}>
-                        {rowData => (
-                            <>
-                                <FaTrash className="mx-2" width="0.5em" onClick={() => deleteHandler(rowData.id)}/>
-                            </>
-                        )}
-                    </Cell>
-                </Column>
             </Table>
 
             <div style={{padding: 20}}>

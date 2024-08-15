@@ -5,12 +5,10 @@ import {FaDownload, FaTrash} from "react-icons/fa6";
 import {Table} from "rsuite";
 import {useSelector} from "react-redux";
 import moment from "moment";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const {Column, HeaderCell, Cell} = Table;
 
 const MyBookings = () => {
-    const authUserId = 1;
     const [allBookings, setAllBookings] = useState([]);
     const authUser = useSelector(state => state?.auth?.user)
     useEffect(() => {
@@ -71,6 +69,20 @@ const MyBookings = () => {
                                     {'Departure: ' + moment(rowData.departureDate).format("MMM D, ddd") + ' ' + moment(rowData.departureTime, 'HH:mm:ss').format("h:mm A")}
                                     <br/>
                                     {'Arrival: ' + moment(rowData.arrivalDate).format("MMM D, ddd") + ' ' + moment(rowData.arrivalTime, 'HH:mm:ss').format("h:mm A")}
+
+                                    {rowData?.returnFlightNumber && <span>
+
+                                        <br/> {'--------------------------'} <br/>
+                                        {'Flight No: ' + rowData.returnFlightNumber}<br/>
+                                        {rowData.returnCodeDepartureAirport + ' - ' + rowData.returnCodeArrivalAirport}
+                                        <br/>
+                                        {'Departure: ' + moment(rowData.returnDepartureDate).format("MMM D, ddd") + ' ' + moment(rowData.returnDepartureTime, 'HH:mm:ss').format("h:mm A")}
+                                        <br/>
+                                        {'Arrival: ' + moment(rowData.returnArrivalDate).format("MMM D, ddd") + ' ' + moment(rowData.returnArrivalTime, 'HH:mm:ss').format("h:mm A")}
+
+
+                                    </span>}
+
                                 </p>}
                             </Cell>
                         </Column>

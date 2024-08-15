@@ -93,9 +93,12 @@ const LandingPage = () => {
     return <SiteLayout>
         <div className={`row`}>
             <div className={`col-12 py-4`}>
-                <p className={`welcomeText text-center`}> Welcome to flight searching app, find flights in cheap rate
-                    and enjoy
-                    holidays</p>
+                <div className={`box`}>
+                    <p className={`welcomeText text-center`}> Welcome to our flight booking app, find flights in cheap
+                        rate
+                        and enjoy
+                        holidays</p>
+                </div>
             </div>
         </div>
         <div className={`row`}>

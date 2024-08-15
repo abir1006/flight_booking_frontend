@@ -216,9 +216,10 @@ const FlightBooking = () => {
                             })}
 
 
-                            <p><strong>Total:
-                                ${flightBooking[0]?.ticketPrice + flightBooking[1]?.ticketPrice * travellers} USD</strong>
-                            </p>
+                            { tripType == 1 && <p> <strong>Total: ${flightBooking[0]?.ticketPrice * travellers} USD</strong></p> }
+                            { tripType == 2 && <p>
+                                <strong>Total: ${(flightBooking[0]?.ticketPrice + flightBooking[1]?.ticketPrice) * travellers} USD</strong>
+                            </p> }
 
                             <h4 className={`my-3`}>Payment information</h4>
 

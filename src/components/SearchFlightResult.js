@@ -32,7 +32,6 @@ const SearchFlightResult = ({flight}) => {
     }
 
     const roundTripFlightBookingHandler = (flight1, flight2) => {
-
         let finalBooking = [];
         finalBooking.push(flight1);
         finalBooking.push(flight2);
@@ -71,6 +70,7 @@ const SearchFlightResult = ({flight}) => {
             {
                 [...Array(parseInt(maxFlightCount))].map((v, j) => {
                     i = i + 1;
+
                     index2 = index2 + 1;
                     if (departureFlightIsMoreThanReturn && j > minFlightCount - 1) {
                         index2 = 0;
@@ -79,6 +79,9 @@ const SearchFlightResult = ({flight}) => {
                     if (!departureFlightIsMoreThanReturn && j > minFlightCount - 1) {
                         i = 0;
                     }
+
+                    let currentIndex1 = i;
+                    let currentIndex2 = index2;
 
                     return <Panel className={`search-result-row mb-3`} bordered>
                         <div className={`row`}>
@@ -150,7 +153,7 @@ const SearchFlightResult = ({flight}) => {
                                     <p>
                                         <strong>${flight[0][i]?.ticketPrice + flight[1][index2]?.ticketPrice} USD</strong>
                                         <button
-                                            onClick={e => roundTripFlightBookingHandler(flight[0][i], flight[1][index2])}
+                                            onClick={e=> roundTripFlightBookingHandler(flight[0][currentIndex1], flight[1][currentIndex2])}
                                             className={`btn mx-3 mt-2`}>
                                             Select >
                                         </button>
